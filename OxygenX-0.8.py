@@ -848,7 +848,7 @@ class Main:
                         loader = open(fname)
                     except IOError:
                         print(f"{red}File not accessible or doesn't exist!\n")
-                        raise new FileNotFoundError(fname)
+                        raise FileNotFoundError(fname)
                 if OxygenX.combo_dup:
                     self.accounts = list(set(x.strip() for x in loader if x != ''))
                 else:
