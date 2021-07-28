@@ -896,8 +896,9 @@ class Main:
 
 def checkforupdates():
     try:
-        gitversion = session.get(
-            "https://raw.githubusercontent.com/Minecon724/OxygenX/master/OxygenX.py").text.partition('\n')[0][11:len(version)-1]
+        gitversionline = session.get(
+            "https://raw.githubusercontent.com/Minecon724/OxygenX/master/OxygenX.py").text.partition('\n')[0]
+        gitversion = gitversionline[11:len(gitversionline)-1]
         if f'{version}\n' != gitversion:
             print(t)
             print(f"{red}Your version is outdated.")
