@@ -11,7 +11,13 @@ from traceback import format_exc
 from cloudscraper import create_scraper
 from colorama import init, Fore
 from console.utils import set_title
-from easygui import fileopenbox
+nogui = False
+try:
+    from easygui import fileopenbox
+except ImportError as e:
+    print("Tkinter not found, using CLI mode.")
+    nogui = True
+    
 from requests import Session, exceptions
 from yaml import safe_load
 
@@ -832,8 +838,17 @@ class Main:
             try:
                 print(f"{cyan}Please Import Your Combo List...")
                 sleep(0.3)
-                loader = open(fileopenbox(title="Load Combo List", default="*.txt"), 'r', encoding="utf8",
+                if not nogui:
+                    loader = open(fileopenbox(title="Load Combo List", default="*.txt"), 'r', encoding="utf8",
                               errors='ignore').read().split('\n')
+                else:
+                    print(f"{cyan}Please input file path: ")
+                    fname = input()
+                    try:
+                        loader = open(fname)
+                    except IOError:
+                        print(f"{red}File not accessible or doesn't exist!\n")
+                        raise new FileNotFoundError(fname)
                 if OxygenX.combo_dup:
                     self.accounts = list(set(x.strip() for x in loader if x != ''))
                 else:
