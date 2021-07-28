@@ -748,7 +748,7 @@ class Main:
                     print(f"{cyan}Please input file path: ")
                     fname = input()
                     try:
-                        loader = open(fname)
+                        loader = open(fname).read().split('\n')
                     except IOError:
                         print(f"{red}File not accessible or doesn't exist!\n")
                         raise FileNotFoundError(fname)
