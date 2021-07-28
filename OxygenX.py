@@ -1,3 +1,6 @@
+version = "0.9"
+# this needs to be the first line
+
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from multiprocessing.dummy import Pool as ThreadPool
@@ -894,13 +897,13 @@ class Main:
 def checkforupdates():
     try:
         gitversion = session.get(
-            "https://raw.githubusercontent.com/ShadowOxygen/OxygenX/master/version.txt").text
+            "https://raw.githubusercontent.com/Minecon724/OxygenX/master/OxygenX.py").text.partition('\n')[0][11:len(version)-1]
         if f'{version}\n' != gitversion:
             print(t)
             print(f"{red}Your version is outdated.")
             print(f"Your version: {version}\n")
             print(f'Latest version: {gitversion}Get latest version in the link below')
-            print(f"https://github.com/ShadowOxygen/OxygenX/releases\nStarting in 5 seconds...{cyan}")
+            print(f"https://github.com/Minecon724/OxygenX/releases\nStarting in 5 seconds...{cyan}")
             sleep(5)
             clear()
     except:
@@ -979,8 +982,7 @@ if __name__ == '__main__':
     sfa_url = 'https://api.mojang.com/user/security/challenges'
     charz = ['@', '!', '#', '$', '%', '^', '&', '*', ')', '(', '-', '}', '{', ']', '"', '+', '=', '?', '/',
              '.', '>', ',', '<', '`', '\'', '~', '[', '\\', ' ']
-    version = '0.8'
-    set_title(f'OxygenX-{version} | by ShadowOxygen')
+    set_title(f'OxygenX v{version} | by ShadowOxygen')
     t = f'''{cyan}________                                     ____  ___
 \_____  \ ___  ______.__. ____   ____   ____ \   \/  /
  /   |   \\\  \/  <   |  |/ ___\_/ __ \ /    \ \     /
