@@ -15,7 +15,7 @@ OxygenX:
   check_for_updates: true
 
   # Amount of checks for a account many times to check a account. Set it to as much as you can to avoid errors.
-  # Needs to be 1 or higher (Recommanded: <4 for no proxy, 4-8 for paid proxies, >8 for public proxies.)
+  # Needs to be 1 or higher (Recommanded: 1-2 for no proxy, 2-8 for paid proxies, 8+ for public proxies.)
   retries: 8
 
   # Higher for better accuracy but slower (counted in milliseconds, example: 6000ms = 6 seconds)
@@ -49,7 +49,7 @@ OxygenX:
   capes:
     liquidbounce: true
     optifine: true
-    labymod:  true
+    labymod:  false # Currently broken
     mojang:  true
 
   # Rank check
