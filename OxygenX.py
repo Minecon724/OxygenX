@@ -3,7 +3,6 @@ version = "0.9.1"
 
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
-from json.decode import JSONDecodeError
 from multiprocessing.dummy import Pool as ThreadPool
 from os import mkdir, path, system, name
 from random import choice
@@ -139,7 +138,7 @@ class Main:
                 else:
                     try:
                         ajson = answer.json()
-                    except JSONDecodeError as e:
+                    except:
                         atext = answer.text
                         if "Request blocked." in atext:
                             raise Exception("You are being ratelimited by Mojang.")
