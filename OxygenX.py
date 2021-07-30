@@ -3,6 +3,7 @@ version = "0.9"
 
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
+from json.decode import JSONDecodeError
 from multiprocessing.dummy import Pool as ThreadPool
 from os import mkdir, path, system, name
 from random import choice
@@ -136,7 +137,12 @@ class Main:
                     self.writing([line, 'Demo'])
                     return
                 else:
-                    ajson = answer.json()
+                    try:
+                        ajson = answer.json()
+                    except JSONDecodeError as e:
+                        atext = answer.text
+                        if "Request blocked." in atext:
+                            raise Exception("You are being ratelimited by Mojang.")
                     uuid = ajson['availableProfiles'][0]["id"]
                     username = ajson['availableProfiles'][0]['name']
                     self.writing([line, 'Hits'])
@@ -267,8 +273,9 @@ class Main:
                     self.writing([''.join(data), 'CaptureData'])
                     return
             except:
+                self.prints(f'{red}[Error] {line}')
                 if OxygenX.debug:
-                    self.prints(f'{red}[Error] {line} \nError: {format_exc(limit=1)}')
+                    self.prints(f'{red}Error: {format_exc(limit=1)}')
                 self.writing([line, 'Error'])
                 Counter.error += 1
                 return
