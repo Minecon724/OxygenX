@@ -15,13 +15,13 @@ OxygenX:
   check_for_updates: true
 
   # Amount of checks for a account many times to check a account. Set it to as much as you can to avoid errors.
-  # Needs to be 1 or higher (Recommanded: 4-8 for paid proxies, 8+ for public proxies.)
+  # Needs to be 1 or higher (Recommanded: <4 for no proxy, 4-8 for paid proxies, >8 for public proxies.)
   retries: 8
 
   # Higher for better accuracy but slower (counted in milliseconds, example: 6000ms = 6 seconds)
   timeout: 6000
 
-  # Threads for account checking
+  # Threads for account checking (set to very small amount if you don't use proxy)
   threads: 100
   
   # Remove all combo duplicates
