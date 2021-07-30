@@ -1,4 +1,4 @@
-version = "0.9"
+version = "0.9.1"
 # this needs to be the first line
 
 from concurrent.futures import ThreadPoolExecutor
