@@ -910,7 +910,7 @@ def checkforupdates():
             print(t)
             print(f"{red}Your version is outdated.")
             print(f"Your version: {version}\n")
-            print(f'Latest version: {gitversion}\n")
+            print(f'Latest version: {gitversion}\n')
             if OxygenX.auto_update:
                 print("Updating...")
                 try:
