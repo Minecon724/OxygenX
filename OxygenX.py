@@ -915,13 +915,13 @@ def checkforupdates():
             if OxygenX.auto_update:
                 print("Updating...")
                 try:
+                    rename(__file__, "OxygenX.py.old")
                     script = open(__file__, 'w')
                     script.write(gitscript)
                     script.close()
                 except:
                     print(f"Error updating:\n{format_exc(limit=1)}")
                 print("Updated, please restart.")
-                rename(__file__, "OxygenX.py.old")
                 exit()
             else:
                 print('Get latest version in the link below:')
