@@ -42,6 +42,9 @@ OxygenX:
   # Save bad accounts
   save_bad: true
 
+  # Disabling can fix some issues
+  use_https: true
+
   # Normal users should keep this false unless problems start happening
   debugging: false
   
