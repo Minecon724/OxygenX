@@ -530,7 +530,7 @@ class Main:
         cape = False
         if OxygenX.Cape.optifine:
             try:
-                optifine = session.get(url=f'http://s.optifine.net/capes/{user}.png').text
+                optifine = session.get(url=f'{OxygenX.http}://s.optifine.net/capes/{user}.png').text
                 if 'Not found' not in optifine:
                     cape = True
                     Counter.optifine += 1
@@ -545,7 +545,7 @@ class Main:
         cape = False
         if OxygenX.Cape.mojang:
             try:
-                mine = session.get(url=f'https://crafatar.com/capes/{uuid}', headers=mailheaders).text.lower()
+                mine = session.get(url=f'{OxygenX.http}://crafatar.com/capes/{uuid}', headers=mailheaders).text.lower()
                 if 'png' in mine:
                     cape = True
                     Counter.mojang += 1
@@ -558,8 +558,9 @@ class Main:
 
     def labymod(self, uuid, combo, user):
         cape = False
-        if OxygenX.Cape.laby:
-            link = f'https://capes.labymod.net/capes/{uuid[:8]}-{uuid[8:12]}-{uuid[12:16]}-{uuid[16:20]}-{uuid[20:]}'
+        #if OxygenX.Cape.laby: broken
+        if False:
+            link = f'{OxygenX.http}://capes.labymod.net/capes/{uuid[:8]}-{uuid[8:12]}-{uuid[12:16]}-{uuid[16:20]}-{uuid[20:]}'
             try:
                 laby = session.get(url=link, headers=mailheaders).text
                 if 'Not Found' not in laby:
@@ -574,7 +575,7 @@ class Main:
     def liquidbounce(self):
         try:
             lbc = session.get(
-                url='https://raw.githubusercontent.com/CCBlueX/FileCloud/master/LiquidBounce/cape/service.json',
+                url=f'{OxygenX.http}://raw.githubusercontent.com/CCBlueX/FileCloud/master/LiquidBounce/cape/service.json',
                 headers=mailheaders).text
             return lbc
         except:
@@ -586,7 +587,7 @@ class Main:
         rank = False
         if OxygenX.Rank.hivemc:
             try:
-                response = session.get(url=f'https://www.hivemc.com/player/{uuid}', headers=mailheaders).text
+                response = session.get(url=f'{OxygenX.http}://www.hivemc.com/player/{uuid}', headers=mailheaders).text
                 match = rankhv.search(response).group(1)
                 if match != 'Regular':
                     rank = match
@@ -604,7 +605,7 @@ class Main:
         both = [False, False]
         if OxygenX.Rank.mineplex or OxygenX.Level.mineplex:
             try:
-                response = session.get(url=f'https://www.mineplex.com/players/{username}',
+                response = session.get(url=f'{OxygenX.http}://www.mineplex.com/players/{username}',
                                        headers=mailheaders).text
                 if 'That player cannot be found.' in response:
                     both[0] = False
@@ -633,7 +634,7 @@ class Main:
         both = [False, False, False, False, 0, 0, 0]
         if OxygenX.Rank.hypixel or OxygenX.Level.hypixel:
             try:
-                answer = session.get(url=f'https://api.slothpixel.me/api/players/{uuid}',
+                answer = session.get(url=f'{OxygenX.http}://api.slothpixel.me/api/players/{uuid}',
                                      headers=mailheaders).json()
                 if 'Failed to get player uuid' not in str(answer):
                     rank = str(answer['rank'])
@@ -673,7 +674,7 @@ class Main:
 
     def skyblock(self, uuid):
         try:
-            link = f'https://sky.lea.moe/stats/{uuid}'
+            link = f'{OxygenX.http}://sky.lea.moe/stats/{uuid}'
             check = session.get(url=link).text
             if 'Show SkyBlock stats for' in check:
                 return False
@@ -688,7 +689,7 @@ class Main:
         rank = False
         if OxygenX.Rank.veltpvp:
             try:
-                link = session.get(url=f'https://www.veltpvp.com/u/{username}', headers=mailheaders).text
+                link = session.get(url=f'{OxygenX.http}://www.veltpvp.com/u/{username}', headers=mailheaders).text
                 if 'Not Found' not in link:
                     rank = veltrankz.search(link).group(1)
                     if rank not in ['Default', 'Standard']:
@@ -903,7 +904,7 @@ class Main:
 def checkforupdates():
     try:
         gitversionline = session.get(
-            "https://raw.githubusercontent.com/Minecon724/OxygenX/master/OxygenX.py").text.split('\n')[0]
+            f"{OxygenX.http}://raw.githubusercontent.com/Minecon724/OxygenX/master/OxygenX.py").text.split('\n')[0]
         gitversion = gitversionline[11:len(gitversionline)-2]
         if version != gitversion:
             print(t)
@@ -929,6 +930,8 @@ class OxygenX:
     ranktype = bool(settings['OxygenX']['save_ranked_type'])
     print_bad = bool(settings['OxygenX']['print_bad'])
     save_bad = bool(settings['OxygenX']['save_bad'])
+    use_https = bool(settings['OxygenX']['use_https'])
+    http = "https" if use_https else "http"
     debug = bool(settings['OxygenX']['debugging'])
 
     class Cape:
@@ -984,9 +987,9 @@ if __name__ == '__main__':
     scraper = create_scraper(sess=Session(), browser={'custom': agent})
     mailheaders = {'user-agent': agent}
     jsonheaders = {"Content-Type": "application/json", 'Pragma': 'no-cache'}
-    user_url = 'https://api.mojang.com/profiles/minecraft'
-    auth_mc = 'https://authserver.mojang.com/authenticate'
-    sfa_url = 'https://api.mojang.com/user/security/challenges'
+    user_url = f'{OxygenX.http}://api.mojang.com/profiles/minecraft'
+    auth_mc = f'{OxygenX.http}://authserver.mojang.com/authenticate'
+    sfa_url = f'{OxygenX.http}://api.mojang.com/user/security/challenges'
     charz = ['@', '!', '#', '$', '%', '^', '&', '*', ')', '(', '-', '}', '{', ']', '"', '+', '=', '?', '/',
              '.', '>', ',', '<', '`', '\'', '~', '[', '\\', ' ']
     set_title(f'OxygenX v{version} | by ShadowOxygen')
