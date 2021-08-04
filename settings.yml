@@ -14,8 +14,8 @@ OxygenX:
   # Check if current version of OxygenX is latest
   check_for_updates: true
 
-  # Amount of checks for a account many times to check a account. Set it to as much as you can to avoid errors.
-  # Needs to be 1 or higher (Recommanded: 1-2 for no proxy, 2-8 for paid proxies, 8+ for public proxies.)
+  # How much times to check a account. Set it to as much as you can to avoid errors.
+  # Needs to be 1 or higher
   retries: 8
 
   # Higher for better accuracy but slower (counted in milliseconds, example: 6000ms = 6 seconds)
@@ -42,7 +42,7 @@ OxygenX:
   # Save bad accounts
   save_bad: true
 
-  # Disabling can fix some issues
+  # Broken, please don't disable
   use_https: true
 
   # Normal users should keep this false unless problems start happening
