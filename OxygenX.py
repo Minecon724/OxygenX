@@ -1,12 +1,13 @@
-version = "0.9.3"
+version = "0.10.0"
 # this needs to be the first line
 
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from multiprocessing.dummy import Pool as ThreadPool
-from os import mkdir, path, system, name
+from os import mkdir, path, system, name, execv
 from random import choice
 from re import compile
+from sys import argv
 from threading import Thread, Lock
 from time import sleep, strftime, time, gmtime
 from traceback import format_exc
@@ -905,7 +906,7 @@ def checkforupdates():
     try:
         gitscript = session.get(
             f"{OxygenX.http}://raw.githubusercontent.com/Minecon724/OxygenX/master/OxygenX.py").text
-        gitversion = gitscript.split("\n")[0][11:len(gitversionline)-2]
+        gitversion = gitscript.split("\n")[0][11:len(gitscript.split("\n")[0])-2]
         if version != gitversion:
             print(t)
             print(f"{red}Your version is outdated.")
@@ -919,7 +920,9 @@ def checkforupdates():
                     script.close()
                 except:
                     print(f"Error updating:\n{format_exc(limit=1)}")
-                print("Updated, please restart this script.")
+                print("Updated, restarting.")
+                os.execv(argv[0], argv)
+                exit()
             else:
                 print('Get latest version in the link below:')
                 print(f"https://github.com/Minecon724/OxygenX/releases\nStarting in 5 seconds...{cyan}")
@@ -932,7 +935,7 @@ def checkforupdates():
 
 class OxygenX:
     check_for_updates = bool(settings['OxygenX']['check_for_updates'])
-    auto_update = bool(settings['OxygenX']['auto_update''])
+    auto_update = bool(settings['OxygenX']['auto_update'])
     retries = int(settings['OxygenX']['retries'])
     timeout = int(settings['OxygenX']['timeout']) / 1000
     threads = int(settings['OxygenX']['threads'])
