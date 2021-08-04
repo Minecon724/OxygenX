@@ -921,7 +921,7 @@ def checkforupdates():
                 except:
                     print(f"Error updating:\n{format_exc(limit=1)}")
                 print("Updated, restarting.")
-                os.execv(argv[0], argv)
+                execv(argv[0], argv)
                 exit()
             else:
                 print('Get latest version in the link below:')
