@@ -1,4 +1,4 @@
-version = "0.10.1"
+version = "0.10.2"
 # this needs to be the first line
 
 from concurrent.futures import ThreadPoolExecutor
@@ -14,7 +14,12 @@ from traceback import format_exc
 
 from cloudscraper import create_scraper
 from colorama import init, Fore
-from console.utils import set_title
+# from console.utils import set_title -- console fails to compile on nuitka
+# copied from: https://github.com/mixmastamyk/console/blob/master/console/utils.py
+def set_title(title, mode=0):
+    if name == 'nt':
+        system("title " + title)
+
 nogui = False
 try:
     from easygui import fileopenbox
