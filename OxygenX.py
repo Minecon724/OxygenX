@@ -988,7 +988,7 @@ if __name__ == '__main__':
     mailheaders = {'user-agent': agent}
     jsonheaders = {"Content-Type": "application/json", 'Pragma': 'no-cache'}
     user_url = f'{OxygenX.http}://api.mojang.com/profiles/minecraft'
-    auth_mc = f'{OxygenX.http}://authserver.mojang.com/authenticate'
+    auth_mc = f'https://authserver.mojang.com/authenticate'
     sfa_url = f'{OxygenX.http}://api.mojang.com/user/security/challenges'
     charz = ['@', '!', '#', '$', '%', '^', '&', '*', ')', '(', '-', '}', '{', ']', '"', '+', '=', '?', '/',
              '.', '>', ',', '<', '`', '\'', '~', '[', '\\', ' ']
