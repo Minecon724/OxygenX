@@ -1,10 +1,10 @@
-version = "0.10.0"
+version = "0.10.1"
 # this needs to be the first line
 
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from multiprocessing.dummy import Pool as ThreadPool
-from os import mkdir, path, system, name, execv
+from os import mkdir, path, system, name, rename
 from random import choice
 from re import compile
 from sys import argv
@@ -920,11 +920,8 @@ def checkforupdates():
                     script.close()
                 except:
                     print(f"Error updating:\n{format_exc(limit=1)}")
-                print("Updated, restarting.")
-                try:
-                    execv(argv[0], argv)
-                except:
-                    print(f"Error restarting:\n{format_exc(limit=1)}")
+                print("Updated, please restart.")
+                rename(__file__, "OxygenX.py.old")
                 exit()
             else:
                 print('Get latest version in the link below:')
