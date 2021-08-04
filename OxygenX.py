@@ -4,7 +4,7 @@ version = "0.10.1"
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from multiprocessing.dummy import Pool as ThreadPool
-from os import mkdir, path, system, name, rename
+from os import mkdir, path, system, name, rename, _exit
 from random import choice
 from re import compile
 from sys import argv
@@ -922,7 +922,7 @@ def checkforupdates():
                 except:
                     print(f"Error updating:\n{format_exc(limit=1)}")
                 print("Updated, please restart.")
-                exit()
+                _exit(1)
             else:
                 print('Get latest version in the link below:')
                 print(f"https://github.com/Minecon724/OxygenX/releases\nStarting in 5 seconds...{cyan}")
