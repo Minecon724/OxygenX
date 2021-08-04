@@ -1,4 +1,4 @@
-version = "0.9.2"
+version = "0.9.3"
 # this needs to be the first line
 
 from concurrent.futures import ThreadPoolExecutor
@@ -903,15 +903,26 @@ class Main:
 
 def checkforupdates():
     try:
-        gitversionline = session.get(
-            f"{OxygenX.http}://raw.githubusercontent.com/Minecon724/OxygenX/master/OxygenX.py").text.split('\n')[0]
-        gitversion = gitversionline[11:len(gitversionline)-2]
+        gitscript = session.get(
+            f"{OxygenX.http}://raw.githubusercontent.com/Minecon724/OxygenX/master/OxygenX.py").text
+        gitversion = gitscript.split("\n")[0][11:len(gitversionline)-2]
         if version != gitversion:
             print(t)
             print(f"{red}Your version is outdated.")
             print(f"Your version: {version}\n")
-            print(f'Latest version: {gitversion}Get latest version in the link below')
-            print(f"https://github.com/Minecon724/OxygenX/releases\nStarting in 5 seconds...{cyan}")
+            print(f'Latest version: {gitversion}\n")
+            if OxygenX.auto_update:
+                print("Updating...")
+                try:
+                    script = open(__file__, 'w')
+                    script.write(gitscript)
+                    script.close()
+                except:
+                    print(f"Error updating:\n{format_exc(limit=1)}")
+                print("Updated, please restart this script.")
+            else:
+                print('Get latest version in the link below:')
+                print(f"https://github.com/Minecon724/OxygenX/releases\nStarting in 5 seconds...{cyan}")
             sleep(5)
             clear()
     except:
@@ -920,7 +931,8 @@ def checkforupdates():
 
 
 class OxygenX:
-    version_check = bool(settings['OxygenX']['check_for_updates'])
+    check_for_updates = bool(settings['OxygenX']['check_for_updates'])
+    auto_update = bool(settings['OxygenX']['auto_update''])
     retries = int(settings['OxygenX']['retries'])
     timeout = int(settings['OxygenX']['timeout']) / 1000
     threads = int(settings['OxygenX']['threads'])
@@ -1001,6 +1013,6 @@ if __name__ == '__main__':
         \/      \/\/   /_____/      \/     \/      \_/
 \n'''
 
-    if OxygenX.version_check:
+    if OxygenX.check_for_updates:
         checkforupdates()
     Main()
