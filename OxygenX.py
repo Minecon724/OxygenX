@@ -1,4 +1,4 @@
-version = "0.10.3"
+version = "0.10.4"
 # this needs to be the first line
 
 from concurrent.futures import ThreadPoolExecutor
@@ -579,7 +579,7 @@ class Main:
         return cape
 
     def liquidbounce(self):
-        if OxygenX.cape.lb:
+        if OxygenX.Cape.lb:
             try:
                 lbc = session.get(
                     url=f'{OxygenX.http}://raw.githubusercontent.com/CCBlueX/FileCloud/master/LiquidBounce/cape/service.json',
