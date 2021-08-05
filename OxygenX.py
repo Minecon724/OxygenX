@@ -747,8 +747,8 @@ class Main:
                 connection = Connection("hypixel.net", 25565, auth_token, )
                 connection.connect()
                 sleep(5)
-                _check_connection()
-           except InvalidState as e:
+                connection._check_connection()
+           except InvalidState:
                banned=False
                connection.disconnect()
            except:
