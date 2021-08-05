@@ -40,6 +40,9 @@ OxygenX:
   
   # Save ranked accounts in NFA.txt or SFA.txt (Turn it off for ranked accounts NOT to save in NFA.txt or SFA.txt)
   save_ranked_type: true
+
+  # Save 3-letter account names in 3name.txt
+  save_3_name: true
   
   # Print bad accounts
   print_bad: true
