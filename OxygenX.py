@@ -579,15 +579,16 @@ class Main:
         return cape
 
     def liquidbounce(self):
-        try:
-            lbc = session.get(
-                url=f'{OxygenX.http}://raw.githubusercontent.com/CCBlueX/FileCloud/master/LiquidBounce/cape/service.json',
-                headers=mailheaders).text
-            return lbc
-        except:
-            if OxygenX.debug:
-                self.prints(f'{red}Error LiquidBounce:\n{format_exc(limit=1)}')
-            return False
+        if OxygenX.cape.lb:
+            try:
+                lbc = session.get(
+                    url=f'{OxygenX.http}://raw.githubusercontent.com/CCBlueX/FileCloud/master/LiquidBounce/cape/service.json',
+                    headers=mailheaders).text
+                return lbc
+            except:
+                if OxygenX.debug:
+                    self.prints(f'{red}Error LiquidBounce:\n{format_exc(limit=1)}')
+                return False
 
     def hivemc(self, uuid, combo):
         rank = False
@@ -679,17 +680,18 @@ class Main:
         return both
 
     def skyblock(self, uuid):
-        try:
-            link = f'{OxygenX.http}://sky.lea.moe/stats/{uuid}'
-            check = session.get(url=link).text
-            if 'Show SkyBlock stats for' in check:
+        if OxygenX.Rank.skyblock:
+            try:
+                link = f'{OxygenX.http}://sky.lea.moe/stats/{uuid}'
+                check = session.get(url=link).text
+                if 'Show SkyBlock stats for' in check:
+                    return False
+                else:
+                    return link
+            except:
+                if OxygenX.debug:
+                    self.prints(f'{red}Error SkyBlock \n{format_exc(limit=1)}')
                 return False
-            else:
-                return link
-        except:
-            if OxygenX.debug:
-                self.prints(f'{red}Error SkyBlock \n{format_exc(limit=1)}')
-            return False
 
     def veltpvp(self, username, combo):
         rank = False
@@ -965,6 +967,7 @@ class OxygenX:
         hypixel = bool(settings['OxygenX']['rank']['hypixel'])
         hivemc = bool(settings['OxygenX']['rank']['hivemc'])
         veltpvp = bool(settings['OxygenX']['rank']['veltpvp'])
+        skyblock = bool(settings['OxygenX']['rank']['skyblock'])
 
     class Level:
         hypixel = bool(settings['OxygenX']['level']['hypixel'])
