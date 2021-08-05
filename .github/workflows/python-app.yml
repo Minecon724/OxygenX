@@ -1,0 +1,36 @@
+name: Compile on linux
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python3 -m pip3 install --upgrade pip
+        # Compiling fails on PyPI versionof Nuitka, so we need to install latest version from github
+        pip3 install --upgrade git+https://github.com/Nuitka/Nuitka.git
+        if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+    - name: Compile using Nuitka
+      run: |
+        python3 -m nuitka --follow-imports --standalone --plugin-enable=tk-inter,pylint-warnings --onefile OxygenX.py
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Upload artifact (python script)
+        path: OxygenX.py
+#    - uses: actions/upload-artifact@v2
+#      with:
+#        name: Upload artifact (linux compiled)
+#        path: OxygenX.py
