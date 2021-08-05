@@ -7,23 +7,27 @@
 #
 #                   -Created and coded by ShadowOxygen
 #                   -Code cleaned and revised by MohanadHosny#9152
+#                   -Updated by Minecon724
 #                   -Settings file for OxygenX
 
 OxygenX:
 
-  # Check if current version of OxygenX is latest
+  # Auto updater settings, they are self-explanatory
   check_for_updates: true
   auto_update: true
 
-  # How much times to check a account. Set it to as much as you can to avoid errors.
+  # How much times to check each account. Set it to as much as you can to avoid "false negatives".
   # Needs to be 1 or higher
-  retries: 8
+  # Default: 16
+  retries: 16
 
   # Higher for better accuracy but slower (counted in milliseconds, example: 6000ms = 6 seconds)
+  # Default: 6000
   timeout: 6000
 
-  # Threads for account checking (set to very small amount if you don't use proxy)
-  threads: 100
+  # Threads used for connections
+  # Default: 200
+  threads: 200
   
   # Remove all combo duplicates
   combo_duplicates: true
@@ -43,30 +47,30 @@ OxygenX:
   # Save bad accounts
   save_bad: true
 
-  # Broken, please don't disable
+  # Disabling can fix some errors, but it's not recommended
   use_https: true
 
-  # Normal users should keep this false unless problems start happening
-  debugging: false
+  # Error info
+  debugging: true
   
   # Cape check
   capes:
     liquidbounce: true
     optifine: true
-    labymod:  false # Currently broken
-    mojang:  true
+    labymod: false # Currently broken
+    mojang: true
 
   # Rank check
   rank:
     mineplex: true
-    hypixel:  true
+    hypixel: true
     hivemc: true
     veltpvp: true
     skyblock: true
 
   # Level check
   level:
-    # Save "high level" accounts in different file than other
+    # Save "high level" accounts in their own files
     hypixel: true
     mineplex: true
     
@@ -75,13 +79,14 @@ OxygenX:
     mineplex_level: 21
 
   proxy:
-    # If proxies should be used (it is HIGHLY recommended to use VPN and set "sleep_proxyless" if you don't want to get your ip blacklisted by Mojang)
+    # If proxies should be used (if false, it is HIGHLY recommended to use VPN and set "sleep_proxyless" if you don't want to get your ip blacklisted by Mojang)
     proxy: true
     # Proxy types: https | socks4 | socks5
+    # Socks for some reason don't work on linux?
     proxy_type: 'socks4'
     # EXPERMENTAL! Locks the proxy so other threads can't use it
     lock_proxy: true
-    # EXPERMENTAL! Auto remove proxies (you can limit the proxies removed with proxy_remove_limit)
+    # EXPERMENTAL! Auto remove proxies (you can limit the proxies removed with "proxy_remove_limit")
     remove_bad_proxy: true
     # EXPERMENTAL! If remove bad proxies are on, once the proxy list hits the limit it will stop removing bad proxies
     proxy_remove_limit: 5000
@@ -96,4 +101,4 @@ OxygenX:
       # If proxy_use_api is true, put api link in the parentheses
       api_link: "https://api.proxyscrape.com/?request=getproxies&proxytype=socks4&timeout=4000"
       # If proxy_use_api is true, put a number for seconds to refresh the link (every number under 30 is for no refreshing time, recommend refresh time: 300 seconds aka 5 minutes)
-      refresh_time: 300
+      refresh_time: 29
