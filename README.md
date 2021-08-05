@@ -19,3 +19,5 @@ And more
 ## Download [here](https://github.com/Minecon724/OxygenX/releases)
 
 ### [Troubleshooting](https://github.com/Minecon724/OxygenX/wiki/Troubleshooting)
+
+For very experimental ban checking use branch "ban"!
