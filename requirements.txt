@@ -8,5 +8,5 @@ easygui
 cloudscraper
 console
 cryptography
-pycraft
+git+https://github.com/ammaraskar/pyCraft.git
 pynbt
