@@ -13,6 +13,7 @@ OxygenX:
 
   # Check if current version of OxygenX is latest
   check_for_updates: true
+  auto_update: true
 
   # How much times to check a account. Set it to as much as you can to avoid errors.
   # Needs to be 1 or higher
