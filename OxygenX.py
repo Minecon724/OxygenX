@@ -196,7 +196,7 @@ class Main:
                         self.writing([f'{line} | Username: {username}', 'SpecialName'])
                         data.append('\nSpecial Name: True')
 
-                    with ThreadPoolExecutor(max_workers=9) as exe:
+                    with ThreadPoolExecutor(max_workers=10) as exe:
                         hypixel = exe.submit(self.hypixel, uuid, line).result()
                         mineplex = exe.submit(self.mineplex, username, line).result()
                         hiverank = exe.submit(self.hivemc, uuid, line).result()
@@ -206,6 +206,7 @@ class Main:
                         optifine = exe.submit(self.optifine, username, line).result()
                         labycape = exe.submit(self.labymod, uuid, line, username).result()
                         skyblock = exe.submit(self.skyblock, uuid).result()
+                        liquidb = exe.submit(self.liquidbounce, uuid).result()
                     try:
                         if mojang:
                             data.append('\nMojang Cape: True')
@@ -216,11 +217,8 @@ class Main:
                         if labycape:
                             data.append('\nLabymod Cape: True')
 
-                        if OxygenX.Cape.lb:
-                            if uuid in self.lbcape:
-                                Counter.liquidbounce += 1
-                                self.writing([f'{line} | Username: {username}', 'LiquidBounceCape'])
-                                data.append('\nLiquidBounce Cape: True')
+                        if liquidb:
+                            data.append('\nLiquidBounce Cape: True')
 
                         if dosfa:
                             if mailaccess:
@@ -578,13 +576,16 @@ class Main:
                     self.prints(f'{red}Error Labymod:\n{format_exc(limit=1)}')
         return cape
 
-    def liquidbounce(self):
+    def liquidbounce(self, uuid):
         if OxygenX.Cape.lb:
             try:
                 lbc = session.get(
-                    url=f'{OxygenX.http}://raw.githubusercontent.com/CCBlueX/FileCloud/master/LiquidBounce/cape/service.json',
-                    headers=mailheaders).text
-                return lbc
+                    url=f'{OxygenX.http}://capes.liquidbounce.net/api/v1/cape/uuid/{uuid}').text
+                if "invalid length" in lbc or "unknown uuid" in lbc:
+                    return False
+                else:
+                    return True
+                    Counter.liquidbounce += 1
             except:
                 if OxygenX.debug:
                     self.prints(f'{red}Error LiquidBounce:\n{format_exc(limit=1)}')
