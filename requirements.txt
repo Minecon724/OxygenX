@@ -7,3 +7,6 @@ requests
 easygui
 cloudscraper
 console
+cryptography
+pycraft
+pynbt
